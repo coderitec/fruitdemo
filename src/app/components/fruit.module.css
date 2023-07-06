@@ -1,0 +1,6 @@
+.section{
+    border: 5px double tomato;
+    border-radius: 25px;
+    margin: auto;
+    padding: 2em;
+}
