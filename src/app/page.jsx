@@ -1,7 +1,10 @@
-import Fruits from "./components/Fruits";
+"use client"
+import { useState } from "react";
+import Image from "next/image"
+import style from './components/fruit.module.css'
+import Link from "next/link";
 
-
-const fruits = [
+export let fruits = [
   {
     id: 1,
     name: 'Apple',
@@ -100,10 +103,52 @@ const fruits = [
   },
 ];
 
+
 export default function page() {
+  const [items, setItems] = useState(fruits)
+  const [searchItem, setSearchItem] = useState('')
+
+
+
+  const filteredItem = fruits.filter(item => item.name.toLowerCase().includes(searchItem.toLowerCase()) ||item.botanicalName.toLowerCase().includes(searchItem.toLowerCase()))
+
+  function onChange(e){
+    return setSearchItem(e.target.value)
+  }
+
+    const fruitList =  filteredItem.length > 0 ? filteredItem.map(fruit => (
+   
+        <section key={fruit.id} className={`bg-blue-500 text-center ${style.section}`}>
+            <Link href={`/football/${fruit.name}`}>
+            <Image src={fruit.image} alt={fruit.name} width={300} height={200}/>
+            <h2>{fruit.name}</h2>
+            <h2>{fruit.botanicalName}</h2>            
+            <h2>{fruit.season}</h2>
+            </Link>
+        </section>
+   
+    )) : ( 
+      <h2>Item was not found</h2>
+    )
   return (
     <div>
-      <Fruits list = {fruits}/>
+
+    <div className="flex items-center justify-center p-3">
+    
+        <input type="text" 
+        name="text" 
+        id="text" 
+        value={searchItem}
+        placeholder="Search a fruit"
+        className="outline-none w3/5 p-4 border-b-2 border-orange-300"
+        onChange={onChange}/>
+  
+    </div>
+
+
+    <div className="grid grid-cols-3 gap-2">
+       {fruitList}
+    </div>
     </div>
   )
 }

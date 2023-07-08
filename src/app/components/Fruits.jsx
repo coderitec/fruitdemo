@@ -9,8 +9,7 @@ export default function Fruits({list}) {
         <section key={fruit.id} className={`bg-blue-500 text-center ${style.section}`}>
             <Image src={fruit.image} alt={fruit.name} width={300} height={200}/>
             <h2>+{fruit.name}</h2>
-            <h2>{fruit.botanicalName}</h2>
-            <h2>{fruit.season}</h2>
+            <h2>{fruit.botanicalName}</h2>            <h2>{fruit.season}</h2>
             <div className="grid grid-cols-3 w-3/5">
             <AiOutlineInstagram />
             <FcLike />
