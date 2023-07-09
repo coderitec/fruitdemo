@@ -1,10 +1,9 @@
 "use client"
-import { useState } from "react";
-import Image from "next/image"
-import style from './components/fruit.module.css'
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
-export let fruits = [
+ export let fruits = [
   {
     id: 1,
     name: 'Apple',
@@ -105,50 +104,43 @@ export let fruits = [
 
 
 export default function page() {
-  const [items, setItems] = useState(fruits)
-  const [searchItem, setSearchItem] = useState('')
+  const [searchItem, setSearchItm] = useState('')
 
-
-
-  const filteredItem = fruits.filter(item => item.name.toLowerCase().includes(searchItem.toLowerCase()) ||item.botanicalName.toLowerCase().includes(searchItem.toLowerCase()))
+  const filteredItem = fruits.filter(item => item.name.toLowerCase().includes(searchItem.toLowerCase()) ||  item.botanicalName.toLowerCase().includes(searchItem.toLowerCase()))
 
   function onChange(e){
-    return setSearchItem(e.target.value)
+    return setSearchItm(e.target.value)
   }
 
-    const fruitList =  filteredItem.length > 0 ? filteredItem.map(fruit => (
-   
-        <section key={fruit.id} className={`bg-blue-500 text-center ${style.section}`}>
-            <Link href={`/football/${fruit.name}`}>
-            <Image src={fruit.image} alt={fruit.name} width={300} height={200}/>
-            <h2>{fruit.name}</h2>
-            <h2>{fruit.botanicalName}</h2>            
-            <h2>{fruit.season}</h2>
-            </Link>
-        </section>
-   
-    )) : ( 
-      <h2>Item was not found</h2>
-    )
+  const fruitList = filteredItem.length > 0 ? filteredItem.map(fruit => (
+    <article key={fruit.id} className="border-4 border-orange-600 border-double rounded-lg py-3 flex flex-col items-center justify-center">
+      <Link href={`/${fruit.name}`}>
+      <Image src={fruit.image} alt={fruit.name} width={300} height={300}/>
+      <h2>Name: {fruit.name}</h2>
+      <h2>Botanical Name: {fruit.botanicalName}</h2>
+      <h2>Season: {fruit.season}</h2>
+      </Link>
+    </article>
+  )) : (
+    <h2 className="text-center p-4 uppercase text-xl">Item search not found, <Link href='/' className="text-orange-500 underline">return to home</Link></h2>
+  )
+
   return (
     <div>
+      <h1 className="p-4 text-center uppercase font-bold text-3xl">my favourite fruits across the year</h1>
+        <div className="w-3/5 m-auto py-3">
+          <input type="text" name="text" id="text" 
+          className="outline-none w-[100%] py-3 border-b-4 border-orange-600 "
+          placeholder="Search for a fruit"
+          value={searchItem}
+          onChange={onChange}
+          />
+        </div>
+      <section className="grid md:grid-cols-3 gap-2 grid-cols-1 px-2">
 
-    <div className="flex items-center justify-center p-3">
-    
-        <input type="text" 
-        name="text" 
-        id="text" 
-        value={searchItem}
-        placeholder="Search a fruit"
-        className="outline-none w3/5 p-4 border-b-2 border-orange-300"
-        onChange={onChange}/>
-  
-    </div>
-
-
-    <div className="grid grid-cols-3 gap-2">
-       {fruitList}
-    </div>
-    </div>
+      {fruitList}
+      </section>
+      </div>
   )
 }
+
