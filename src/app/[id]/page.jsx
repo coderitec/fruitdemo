@@ -1,3 +1,4 @@
+"use client"
 import { fruits } from "../page"
 
 export default function page({params}) {
